@@ -17,7 +17,7 @@ void RippleView::update(ofVec3f position){
     ofFill();
 
     ofSetColor(ofNoise( ofGetFrameNum() ) * 255 * 5, 255);
-    ofDrawEllipse(position.x, position.y, 10,10);
+    ofDrawEllipse(position.x, position.y, 5,5);
     rip.end();
     rip.update();
 }

@@ -4,7 +4,7 @@
 #include "Model.hpp"
 #include "OSCManager.hpp"
 #include "RippleView.hpp"
-
+#include "MacroManager.hpp"
 
 class ofApp : public ofBaseApp{
 
