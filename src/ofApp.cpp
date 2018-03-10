@@ -3,16 +3,22 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     OSCManager::setup();
+    mRippleView.setup();
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     OSCManager::update();
+//    mRippleView.update(ofVec3f(mouseX,mouseY,0));
+    mRippleView.update(ofVec3f(Model::x,
+                               Model::y,
+                               Model::z));
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSetWindowTitle("Model::interaction_value: "+ofToString(Model::interaction_value));
+    mRippleView.draw();
 }
 
 //--------------------------------------------------------------
