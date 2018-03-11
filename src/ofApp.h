@@ -26,4 +26,9 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 
     RippleView mRippleView;
+
+    float frame_edge_x_up;
+    float frame_edge_x_down;
+    float frame_edge_y_up;
+    float frame_edge_y_down;
 };

@@ -4,25 +4,48 @@
 void ofApp::setup(){
     ofToggleFullscreen();
     OSCManager::setup();
-    mRippleView.setup();
-    
+//    mRippleView.setup(RippleView::RANDOM_RIPPLE);
+    mRippleView.setup(RippleView::RIPPLE);
+
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     OSCManager::update();
-//    mRippleView.update(ofVec3f(mouseX,mouseY,osc_input_data_interactive));
     
     // switch x,y
-    mRippleView.update(ofVec3f(ofMap(Model::y,0,MacroManager::roomba_frame_max_height,0,ofGetWidth()),
-                               ofMap(Model::x,0,MacroManager::roomba_frame_max_width,0,ofGetHeight()),
+    mRippleView.update(ofVec3f(ofMap(Model::x,0,MacroManager::frame_height,frame_edge_x_down,frame_edge_x_up),
+                               ofMap(Model::y,0,MacroManager::frame_width,frame_edge_y_down, frame_edge_y_up),
                                Model::interaction_value));
+
+    frame_edge_x_up = ofGetWidth()/2-MacroManager::scaling_frame_height/2 - ofGetWidth()/3;
+    frame_edge_x_down = frame_edge_x_up + MacroManager::scaling_frame_height;
+    frame_edge_y_up = ofGetHeight()/2-MacroManager::scaling_frame_width/2;
+    frame_edge_y_down = frame_edge_y_up + MacroManager::scaling_frame_width;
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSetWindowTitle("Model::interaction_value: "+ofToString(Model::interaction_value));
     mRippleView.draw();
+
+    ofNoFill();
+    ofDrawRectangle(0,0,MacroManager::frame_width,MacroManager::frame_height);
+
+    ofSetColor(255,0,0,127);
+
+    ofNoFill();
+    ofDrawRectangle(frame_edge_x_up,
+                    frame_edge_y_up,
+                    MacroManager::scaling_frame_height,
+                    MacroManager::scaling_frame_width);
+
+    ofDrawRectangle(frame_edge_x_down + MacroManager::scaling_distance_kinect_to_frame,
+                    ofGetHeight()/2-MacroManager::scaling_kinect_width/2,
+                    MacroManager::scaling_kinect_height,
+                    MacroManager::scaling_kinect_width
+                    );
+
 }
 
 //--------------------------------------------------------------

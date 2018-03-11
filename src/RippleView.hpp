@@ -14,13 +14,18 @@
 class RippleView{
 public:
     ofxRipples  rip;
+    enum mode {
+        RIPPLE,
+        RANDOM_RIPPLE
+    };
+    mode effect_mode;
 
     ofVec2f position;
     float damping;
 
     RippleView(){};
 
-    void setup();
+    void setup(mode arg_mode);
     void update(ofVec3f position);
     void draw();
 };
