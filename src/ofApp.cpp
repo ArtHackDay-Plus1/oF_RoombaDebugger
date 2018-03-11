@@ -2,19 +2,21 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
+    ofToggleFullscreen();
     OSCManager::setup();
     mRippleView.setup();
+    
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     OSCManager::update();
-//    mRippleView.update(ofVec3f(mouseX,mouseY,0));
+//    mRippleView.update(ofVec3f(mouseX,mouseY,osc_input_data_interactive));
     
     // switch x,y
     mRippleView.update(ofVec3f(ofMap(Model::y,0,MacroManager::roomba_frame_max_height,0,ofGetWidth()),
                                ofMap(Model::x,0,MacroManager::roomba_frame_max_width,0,ofGetHeight()),
-                               Model::z));
+                               Model::interaction_value));
 }
 
 //--------------------------------------------------------------
