@@ -2,21 +2,15 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofToggleFullscreen();
+//    ofToggleFullscreen();
     OSCManager::setup();
-//    mRippleView.setup(RippleView::RANDOM_RIPPLE);
-    mRippleView.setup(RippleView::RIPPLE);
-
+    ofBackground(0);
+    ofSetCircleResolution(64);
 }
 
 //--------------------------------------------------------------
 void ofApp::update(){
     OSCManager::update();
-    
-    // switch x,y
-    mRippleView.update(ofVec3f(ofMap(Model::x,0,MacroManager::frame_height,frame_edge_x_down,frame_edge_x_up),
-                               ofMap(Model::y,0,MacroManager::frame_width,frame_edge_y_down, frame_edge_y_up),
-                               Model::interaction_value));
 
     frame_edge_x_up = ofGetWidth()/2-MacroManager::scaling_frame_height/2 - ofGetWidth()/3;
     frame_edge_x_down = frame_edge_x_up + MacroManager::scaling_frame_height;
@@ -27,25 +21,58 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofSetWindowTitle("Model::interaction_value: "+ofToString(Model::interaction_value));
-    mRippleView.draw();
 
+    // ===================== [KINECT & BOX AREA] =====================
+    ofSetColor(255);
     ofNoFill();
     ofDrawRectangle(0,0,MacroManager::frame_width,MacroManager::frame_height);
 
-    ofSetColor(255,0,0,127);
-
-    ofNoFill();
+    ofDrawBitmapString("Astral Body",
+                       frame_edge_x_up,
+                       frame_edge_y_up-10);
     ofDrawRectangle(frame_edge_x_up,
                     frame_edge_y_up,
                     MacroManager::scaling_frame_height,
                     MacroManager::scaling_frame_width);
 
+    ofDrawBitmapString("Kinect",
+                       frame_edge_x_down + MacroManager::scaling_distance_kinect_to_frame,
+                       ofGetHeight()/2-MacroManager::scaling_kinect_width/2 -10);
     ofDrawRectangle(frame_edge_x_down + MacroManager::scaling_distance_kinect_to_frame,
                     ofGetHeight()/2-MacroManager::scaling_kinect_width/2,
                     MacroManager::scaling_kinect_height,
                     MacroManager::scaling_kinect_width
                     );
+    // ===================== [KINECT & BOX AREA] =====================
 
+
+    // ===================== [DRAW ROOMBA] =====================
+    ofFill();
+    ofSetColor(255,0,0,127);
+    ofVec2f roomba_pos = ofVec2f(ofMap(Model::x, MacroManager::frame_height, 0, frame_edge_x_down, frame_edge_x_up),
+                                 ofMap(Model::y, 0, MacroManager::frame_width, frame_edge_y_down, frame_edge_y_up));
+
+    ofDrawBitmapString("Roomba / [x:"+ ofToString(Model::x) +"/y:" + ofToString(Model::y) +"]", roomba_pos.x + 10, roomba_pos.y);
+    ofDrawCircle(roomba_pos.x, roomba_pos.y, 10);
+    ofDrawCircle(roomba_pos.x, roomba_pos.y, 25);
+    // ===================== [DRAW ROOMBA] =====================
+
+
+    // ===================== [Mouse Cursor] =====================
+    ofSetColor(255,0,0,127);
+    ofDrawCircle(mouseX, mouseY, 10);
+    ofSetColor(255,0,0,127);
+    ofDrawCircle(mouseX, mouseY, 50);
+    ofSetColor(255);
+    ofDrawLine(mouseX,
+               mouseY,
+               frame_edge_x_down + MacroManager::scaling_distance_kinect_to_frame,
+               ofGetHeight()/2);
+    ofDrawLine(mouseX, mouseY, frame_edge_x_down, mouseY);
+
+    ofDrawBitmapString("nearest_y : "+ofToString(Model::nearest_y), frame_edge_x_down, mouseY-10);
+    ofDrawBitmapString("nearest_depth : "+ofToString(Model::nearest_depth), frame_edge_x_down, mouseY+15);
+    // ===================== [Mouse Cursor] =====================
 }
 
 //--------------------------------------------------------------
@@ -60,7 +87,9 @@ void ofApp::keyReleased(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
-
+    float nearest_y = ofMap(y, frame_edge_y_up , frame_edge_y_down ,MacroManager::frame_width ,0);
+    float nearest_depth = ofMap(x-frame_edge_x_down, 0, MacroManager::scaling_distance_kinect_to_frame,0,MacroManager::distance_kinect_to_frame);
+    Model::update_values(nearest_y,  nearest_depth);
 }
 
 //--------------------------------------------------------------

@@ -18,12 +18,23 @@ class OSCManager{
 public:
     static string latest_updated_time;
 
-    static ofxOscReceiver receiver;
-    static ofxOscMessage message;
-    
     static void setup();
     static void update();
-    static void draw();
+
+    //========[RECEIVER]========
+    static ofxOscReceiver receiver;
+    static ofxOscMessage message;
+
+    static void setup_receiver();
+    static void update_receiver();
+    //========[RECEIVER]========
+
+    //========[SENDER]========
+    static ofxOscSender sender;
+
+    static void setup_sender();
+    static void update_sender();
+    //========[SENDER]========
 };
 
 

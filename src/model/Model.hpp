@@ -22,6 +22,13 @@ public:
     static void draw();
 
     static void update_values(int x, int y, int z, int interaction_value);
+
+    static int nearest_y;
+    static int nearest_depth;
+    static int num_of_people;
+
+    static void update_values(int nearest_y, int nearest_depth, int num_of_people);
+    static void update_values(int nearest_y, int nearest_depth);
 };
 
 #endif /* Model_hpp */

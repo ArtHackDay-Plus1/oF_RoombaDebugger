@@ -3,7 +3,6 @@
 #include "ofMain.h"
 #include "Model.hpp"
 #include "OSCManager.hpp"
-#include "RippleView.hpp"
 #include "MacroManager.hpp"
 
 class ofApp : public ofBaseApp{
@@ -24,8 +23,6 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
-
-    RippleView mRippleView;
 
     float frame_edge_x_up;
     float frame_edge_x_down;
