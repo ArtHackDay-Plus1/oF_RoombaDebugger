@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    ofToggleFullscreen();
+//    ofToggleFullscreen();
     OSCManager::setup();
     ofBackground(0);
     ofSetCircleResolution(64);
@@ -41,6 +41,17 @@ void ofApp::draw(){
     ofDrawBitmapString("y",
                        frame_edge_x_up - 10,
                        frame_edge_y_up + 10);
+    
+    ofDrawLine(frame_edge_x_up + MacroManager::scaling_frame_to_wall_w + MacroManager::scaling_frame_height,
+               frame_edge_y_up - MacroManager::scaling_frame_to_wall_h,
+               frame_edge_x_up + MacroManager::scaling_frame_to_wall_w + MacroManager::scaling_frame_height,
+               frame_edge_y_up + MacroManager::scaling_frame_width + 100);
+    
+    ofDrawLine(frame_edge_x_up + MacroManager::scaling_frame_to_wall_w + MacroManager::scaling_frame_height,
+               frame_edge_y_up - MacroManager::scaling_frame_to_wall_h,
+               frame_edge_x_up - 100,
+               frame_edge_y_up - MacroManager::scaling_frame_to_wall_h);
+    
 
     ofDrawBitmapString("Kinect",
                        frame_edge_x_down + MacroManager::scaling_distance_kinect_to_frame,
